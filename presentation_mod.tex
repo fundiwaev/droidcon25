@@ -1,0 +1,142 @@
+% FundiwaEV Droidcon Presentation - Dark Theme with Logo
+\documentclass[aspectratio=169]{beamer}
+
+% --- THEME ---
+\usetheme{default}
+\usecolortheme{spruce}
+\setbeamertemplate{navigation symbols}{}
+
+% --- COLORS ---
+\definecolor{terminalgreen}{HTML}{00FF66}
+\definecolor{darkbg}{HTML}{0A0A0A}
+\definecolor{codebg}{HTML}{1E1E1E}
+
+\setbeamercolor{normal text}{fg=white,bg=darkbg}
+\setbeamercolor{frametitle}{fg=terminalgreen,bg=black}
+\setbeamercolor{title}{fg=terminalgreen}
+\setbeamercolor{structure}{fg=terminalgreen}
+
+% --- FONTS ---
+\usepackage{fontspec}
+\setmonofont{JetBrains Mono}
+\setsansfont{Inter}
+
+% --- CODE HIGHLIGHTING ---
+\usepackage{minted}
+\usemintedstyle{monokai}
+
+% --- GRAPHICS ---
+\usepackage{graphicx}
+\usepackage{tikz}
+
+% --- TITLE INFO ---
+\title{FundiWaEV Droidcon Presentation}
+\subtitle{Low-Level Android Systems \& EV Integration}
+\author{Lord Farquard — FundiwaEV}
+\date{Droidcon Nairobi 2025}
+
+% --- DOCUMENT ---
+\begin{document}
+
+% --- TITLE SLIDE ---
+{
+\setbeamertemplate{background canvas}[vertical shading][bottom=black,top=darkbg]
+\begin{frame}[plain]
+    % Droidcon logo (top-right corner)
+    \begin{tikzpicture}[remember picture,overlay]
+        \node[anchor=north east, xshift=-0.5cm, yshift=-0.5cm] 
+            at (current page.north east) 
+            {\includegraphics[width=2.8cm]{droidcon_logo.png}};
+    \end{tikzpicture}
+    
+    \vspace{2cm}
+    \centering
+    {\usebeamerfont{title}\color{terminalgreen}\Huge\bfseries FundiWaEV}\\[0.5cm]
+    {\Large Droidcon Presentation}\\[0.3cm]
+    {\small Low-Level Android Systems \& EV Integration}\\[1cm]
+    {\color{gray}\small Lord Farquard — FundiwaEV}\\[0.2cm]
+    {\color{gray}\small Droidcon Nairobi 2025}
+\end{frame}
+}
+
+% --- OVERVIEW ---
+\begin{frame}{Agenda}
+\begin{itemize}
+    \item FundiWaEV Vision
+    \item Android at the Hardware Level
+    \item Integrating EV Systems with Android
+    \item Debugging, Testing, and Telemetry
+    \item Future of Open Automotive Platforms
+\end{itemize}
+\end{frame}
+
+% --- FUNDIEWAEV SECTION ---
+\section{FundiWaEV Vision}
+\begin{frame}{Our Mission}
+\begin{itemize}
+    \item Building Africa’s first open-source EV platform
+    \item Merging automotive hardware with Android systems
+    \item Empowering developers to innovate locally
+\end{itemize}
+\end{frame}
+
+% --- ANDROID LOW LEVEL SECTION ---
+\section{Android at the Hardware Level}
+\begin{frame}[fragile]{Simplified HAL Interface Example}
+\begin{minted}[fontsize=\scriptsize,bgcolor=codebg]{c}
+struct hw_module_t {
+    const char *id;
+    const char *name;
+    const char *author;
+    int (*open)(const struct hw_module_t*, ...);
+};
+\end{minted}
+\end{frame}
+
+\begin{frame}[fragile]{Accessing Kernel Logs}
+\begin{minted}[fontsize=\small,bgcolor=codebg]{bash}
+adb shell
+dmesg | grep battery
+logcat | grep FundiWaEV_HAL
+\end{minted}
+\end{frame}
+
+% --- EV INTEGRATION SECTION ---
+\section{EV Integration}
+\begin{frame}{Vehicle Communication Stack}
+\begin{itemize}
+    \item CAN / Automotive Ethernet Interface
+    \item Data Collection via Android Service
+    \item Real-time Telemetry \& Display via Dashboard App
+\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{CAN Data Example}
+\begin{minted}[fontsize=\scriptsize,bgcolor=codebg]{python}
+import can
+
+bus = can.interface.Bus(channel='can0', bustype='socketcan')
+for msg in bus:
+    print(f"ID={msg.arbitration_id:X}, Data={msg.data.hex()}")
+\end{minted}
+\end{frame}
+
+% --- CONCLUSION ---
+\begin{frame}{The Road Ahead}
+\begin{itemize}
+    \item Open-source Vehicle OS development
+    \item Local manufacturing partnerships
+    \item Training developers for embedded mobility
+\end{itemize}
+\end{frame}
+
+% --- THANK YOU ---
+\begin{frame}
+\centering
+\Huge{\color{terminalgreen}Thank You!}\\[1cm]
+\Large{Questions?}\\[0.5cm]
+\small{\color{gray}FundiWaEV • Droidcon Nairobi 2025}
+\end{frame}
+
+\end{document}
+
